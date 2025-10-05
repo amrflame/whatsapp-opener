@@ -13,87 +13,61 @@
   <link rel="apple-touch-icon" href="./icons/icon-180.png">
   <style>
     :root{
-      --bg: #0f172a;
-      --card: #111827;
-      --text: #e5e7eb;
-      --muted:#94a3b8;
-      --primary:#16a34a;
-      --primary-2:#22c55e;
-      --danger:#ef4444;
-      --ring:#22c55e33;
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
-      --radius: 18px;
+      --bg:#0f172a; --card:#111827; --text:#e5e7eb; --muted:#94a3b8;
+      --primary:#16a34a; --primary-2:#22c55e; --danger:#ef4444; --ring:#22c55e33;
+      --shadow:0 10px 30px rgba(0,0,0,.35); --radius:18px;
     }
     @media (prefers-color-scheme: light){
-      :root{
-        --bg:#f6f7fb;
-        --card:#ffffff;
-        --text:#0f172a;
-        --muted:#64748b;
-        --shadow: 0 12px 28px rgba(15,23,42,.08);
-      }
+      :root{ --bg:#f6f7fb; --card:#fff; --text:#0f172a; --muted:#64748b; --shadow:0 12px 28px rgba(15,23,42,.08) }
     }
     *{box-sizing:border-box}
     body{
-      margin:0; padding:24px;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      margin:0; padding:24px; min-height:100dvh; display:grid; place-items:center;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
       background: radial-gradient(1200px 600px at 80% -10%, #22c55e22, transparent 60%), var(--bg);
       color:var(--text);
-      min-height:100dvh;
-      display:grid; place-items:center;
     }
-    .wrap{ width:min(560px, 100%); }
-    .card{
-      background:var(--card);
-      border-radius:var(--radius);
-      padding:22px;
-      box-shadow:var(--shadow);
-      border:1px solid #ffffff0f;
-    }
-    .title{ display:flex; align-items:center; gap:10px; font-weight:700; font-size:1.25rem; margin:0 0 6px; }
+    .wrap{ width:min(560px,100%) }
+    .card{ background:var(--card); border-radius:var(--radius); padding:22px; box-shadow:var(--shadow); border:1px solid #ffffff12 }
+    .title{ display:flex; align-items:center; gap:10px; font-weight:700; font-size:1.25rem; margin:0 0 6px }
     .subtitle{ color:var(--muted); margin:0 0 18px; font-size:.95rem }
     .field{
-      display:flex; gap:10px; align-items:center; margin: 10px 0 14px;
+      display:flex; gap:10px; align-items:center; margin:10px 0 14px;
       background:#ffffff08; border:1px solid #ffffff14; border-radius:14px; padding:8px 10px;
-      transition: box-shadow .2s ease, border-color .2s ease, background .2s ease;
+      transition:box-shadow .2s,border-color .2s,background .2s;
     }
-    .field:focus-within{ border-color:var(--primary-2); box-shadow: 0 0 0 4px var(--ring); background:#ffffff0f }
-    .code-pill{
-      user-select:none; padding:.55rem .7rem; border-radius:12px;
-      background:#22c55e22; color:var(--primary-2); font-weight:600; letter-spacing:.5px; font-variant-numeric:tabular-nums;
-      display:flex; align-items:center; gap:6px;
-    }
-    .code-pill small{ color:var(--muted); font-weight:500 }
-    input[type="tel"]{
-      flex:1; min-width:0; border:none; outline:none; background:transparent; color:var(--text);
-      padding:.6rem; font-size:1.05rem; caret-color:var(--primary-2);
-    }
+    .field:focus-within{ border-color:var(--primary-2); box-shadow:0 0 0 4px var(--ring); background:#ffffff0f }
+    .code-pill{ user-select:none; padding:.55rem .7rem; border-radius:12px; background:#22c55e22; color:var(--primary-2); font-weight:600; letter-spacing:.5px }
+    .code-pill small{ color:var(--muted) }
+    input[type="tel"]{ flex:1; min-width:0; border:none; outline:none; background:transparent; color:var(--text); padding:.6rem; font-size:1.05rem; caret-color:var(--primary-2) }
     input::placeholder{ color:#94a3b880 }
-    .actions{ display:flex; gap:10px; margin-top:6px }
+    .actions{ display:flex; flex-wrap:wrap; gap:10px; margin-top:6px }
     .btn{
       appearance:none; border:none; outline:none; cursor:pointer; border-radius:14px; padding:12px 14px;
-      font-weight:700; font-size:1rem; background:linear-gradient(180deg, var(--primary-2), var(--primary));
-      color:white; box-shadow:0 10px 22px rgba(34,197,94,.25);
-      transition: transform .08s ease, box-shadow .2s ease, filter .2s ease;
-      flex: 1;
+      font-weight:700; font-size:1rem; background:linear-gradient(180deg,var(--primary-2),var(--primary)); color:#fff;
+      box-shadow:0 10px 22px rgba(34,197,94,.25); transition:transform .08s,filter .2s;
     }
-    .btn:active{ transform: translateY(1px); filter:saturate(1.05) }
-    .btn.secondary{ background:#ffffff10; color:var(--text); border:1px solid #ffffff1a; box-shadow:none; flex:0 0 auto; }
+    .btn:active{ transform:translateY(1px); filter:saturate(1.05) }
+    .btn.secondary{ background:#ffffff10; color:var(--text); border:1px solid #ffffff1a; box-shadow:none }
+    .btn.ghost{ background:#ffffff06; color:var(--text); border:1px solid #ffffff12 }
+    .btn.small{ padding:10px 12px; font-size:.95rem }
     .preview{
       margin-top:14px; background:#ffffff05; border:1px dashed #ffffff2a; border-radius:12px; padding:12px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-      font-size:.9rem; color:#a7f3d0; overflow:auto; white-space:nowrap;
+      font-family:ui-monospace,Menlo,Consolas,monospace; font-size:.9rem; color:#a7f3d0; overflow:auto; white-space:nowrap;
     }
     .muted{ color:var(--muted); font-size:.88rem; margin-top:8px }
     .toast{
-      position:fixed; inset-inline:0; bottom:18px;
-      width: min(420px, calc(100% - 36px)); margin-inline:auto;
-      padding:12px 14px; border-radius:12px; text-align:center; font-weight:600;
-      background:#000000cc; color:#fff; backdrop-filter: blur(6px);
-      transform: translateY(20px); opacity:0; pointer-events:none; transition: all .25s ease;
+      position:fixed; inset-inline:0; bottom:18px; width:min(420px,calc(100% - 36px)); margin-inline:auto;
+      padding:12px 14px; border-radius:12px; text-align:center; font-weight:600; background:#000c; color:#fff; backdrop-filter:blur(6px);
+      transform:translateY(20px); opacity:0; pointer-events:none; transition:all .25s ease;
     }
-    .toast.show{ transform: translateY(0); opacity:1 }
-    .toast.danger{ background: #ef4444e6 }
+    .toast.show{ transform:translateY(0); opacity:1 }
+    .toast.danger{ background:#ef4444e6 }
+    /* تلميح iOS صغير */
+    .hint{
+      display:none; margin-top:10px; padding:10px; border-radius:12px; border:1px dashed #ffffff2a; background:#ffffff08; color:var(--text); font-size:.9rem;
+    }
+    .hint.show{ display:block }
   </style>
 </head>
 <body>
@@ -106,7 +80,8 @@
         </svg>
         Whatsapp Opener — افتح محادثة واتساب برقم
       </h1>
-      <p class="subtitle">اكتب الرقم المحلي أو الدولي. التطبيق سيضيف كود الدولة <strong>2</strong> تلقائياً بدون حذف الصفر في البداية.</p>
+
+      <p class="subtitle">اكتب الرقم المحلي أو الدولي. سيضيف التطبيق كود الدولة <b>2</b> تلقائياً بدون حذف الصفر الأول.</p>
 
       <div class="field" id="phoneField">
         <div class="code-pill">+2 <small>EG</small></div>
@@ -116,9 +91,16 @@
       <div class="actions">
         <button class="btn" id="openBtn">افتح واتساب الآن</button>
         <button class="btn secondary" id="copyBtn" title="نسخ الرابط">نسخ الرابط</button>
+        <!-- زر الإضافة للشاشة الرئيسية -->
+        <button class="btn ghost small" id="installBtn" style="display:none">أضف إلى الشاشة الرئيسية</button>
       </div>
 
       <div class="preview" id="preview">https://api.whatsapp.com/send?phone=2</div>
+      <!-- تلميح iOS يظهر عند الضغط على زر الإضافة في iOS -->
+      <div class="hint" id="iosHint">
+        على iPhone/iPad: افتح الموقع في <b>Safari</b>، ثم اضغط زر <b>المشاركة</b> (المربع مع السهم ↑)، وبعدها اختر <b>Add to Home Screen</b>.
+      </div>
+
       <p class="muted">تلميح: اضغط Enter داخل الحقل لفتح واتساب. سيتم تجربة التطبيق أولاً ثم الصفحة كخطة بديلة.</p>
     </div>
   </div>
@@ -126,6 +108,7 @@
   <div class="toast" id="toast"></div>
 
   <script>
+    // ---------------- Core app logic ----------------
     const input  = document.getElementById('phone');
     const openBtn = document.getElementById('openBtn');
     const copyBtn = document.getElementById('copyBtn');
@@ -139,19 +122,12 @@
       setTimeout(()=> toastEl.classList.remove('show'), 2000);
     }
 
-    // يحافظ على الصفر الأول ويضيف 2 فقط قبله عند الحاجة
     function normalizeNumber(raw) {
       if (!raw) return null;
       let digits = raw.replace(/\D+/g, '');
       if (!digits) return null;
-
-      if (digits.startsWith('0')) {
-        // 012...  => 2012...
-        digits = '2' + digits;
-      } else if (!digits.startsWith('2')) {
-        // 127...  => 2127...
-        digits = '2' + digits;
-      }
+      if (digits.startsWith('0')) digits = '2' + digits;
+      else if (!digits.startsWith('2')) digits = '2' + digits;
       return digits;
     }
 
@@ -172,20 +148,16 @@
       const { apiUrl, intentUrl } = buildUrls();
       if (!apiUrl || !intentUrl) { showToast('ادخل رقم صحيح', 'danger'); return; }
       window.location.href = intentUrl;
-      setTimeout(() => { window.location.href = apiUrl; }, 700);
+      setTimeout(() => window.location.href = apiUrl, 700);
     }
 
     async function copyLink(){
       const { apiUrl } = buildUrls();
       if (!apiUrl) { showToast('لا يوجد رابط لنسخه', 'danger'); return; }
-      try{
-        await navigator.clipboard.writeText(apiUrl);
-        showToast('تم نسخ الرابط');
-      } catch {
-        const ta = document.createElement('textarea');
-        ta.value = apiUrl; document.body.appendChild(ta);
-        ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
-        showToast('تم نسخ الرابط');
+      try{ await navigator.clipboard.writeText(apiUrl); showToast('تم نسخ الرابط'); }
+      catch{
+        const ta = document.createElement('textarea'); ta.value = apiUrl; document.body.appendChild(ta);
+        ta.select(); document.execCommand('copy'); document.body.removeChild(ta); showToast('تم نسخ الرابط');
       }
     }
 
@@ -193,12 +165,68 @@
     input.addEventListener('keydown', (e) => { if (e.key === 'Enter') openWhatsApp(); });
     openBtn.addEventListener('click', openWhatsApp);
     copyBtn.addEventListener('click', copyLink);
-
     window.addEventListener('load', () => input.focus({ preventScroll:true }));
     updatePreview();
-  </script>
 
-  <script>
+    // ---------------- PWA install button logic ----------------
+    const installBtn = document.getElementById('installBtn');
+    const iosHint = document.getElementById('iosHint');
+    let deferredPrompt = null;
+
+    // Helper: detect installed / standalone
+    function isStandalone(){
+      return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+    }
+    // Helper: basic iOS Safari detection (excludes Chrome/Firefox/Edge on iOS)
+    function isIosSafari(){
+      const ua = window.navigator.userAgent.toLowerCase();
+      const isiOS = /iphone|ipad|ipod/.test(ua);
+      const isSafari = /^((?!crios|fxios|edgios).)*safari/.test(window.navigator.userAgent.toLowerCase());
+      return isiOS && isSafari;
+    }
+
+    // ANDROID/CHROME: show btn when beforeinstallprompt fires
+    window.addEventListener('beforeinstallprompt', (e) => {
+      // Only show if not installed
+      if (isStandalone()) return;
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtn.style.display = 'inline-block';
+      installBtn.textContent = 'أضف إلى الشاشة الرئيسية';
+      installBtn.onclick = async () => {
+        try{
+          deferredPrompt.prompt();
+          const choice = await deferredPrompt.userChoice;
+          if (choice.outcome === 'accepted') showToast('تم بدء التثبيت');
+          deferredPrompt = null;
+          installBtn.style.display = 'none';
+        }catch(_){ /* ignore */ }
+      };
+    });
+
+    // iOS/Safari: لا يوجد beforeinstallprompt — نُظهر زرًا يعرض التعليمات
+    function setupIosA2HS(){
+      if (isStandalone()) return; // مثبت بالفعل
+      if (isIosSafari()){
+        installBtn.style.display = 'inline-block';
+        installBtn.textContent = 'أضف إلى الشاشة الرئيسية';
+        installBtn.onclick = () => {
+          iosHint.classList.toggle('show'); // إظهار/إخفاء التلميح
+          showToast('افتح قائمة المشاركة ثم Add to Home Screen');
+        };
+      } else {
+        // لو iOS لكن ليس Safari، نعرض زرًا يوجّه المستخدم لفتح Safari
+        const isiOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+        if (isiOS){
+          installBtn.style.display = 'inline-block';
+          installBtn.textContent = 'افتح في Safari للإضافة';
+          installBtn.onclick = () => showToast('افتح الرابط في Safari ثم استخدم Add to Home Screen');
+        }
+      }
+    }
+    setupIosA2HS();
+
+    // SW registration
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js').catch(console.error);
