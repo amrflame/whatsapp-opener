@@ -7,7 +7,6 @@
   <meta name="color-scheme" content="light dark" />
   <meta name="theme-color" content="#16a34a">
   <link rel="manifest" href="./manifest.json">
-  <!-- iOS support -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <link rel="apple-touch-icon" href="./icons/icon-180.png">
@@ -27,19 +26,27 @@
       background: radial-gradient(1200px 600px at 80% -10%, #22c55e22, transparent 60%), var(--bg);
       color:var(--text);
     }
-    .wrap{ width:min(560px,100%) }
+    .wrap{ width:min(640px,100%) }
     .card{ background:var(--card); border-radius:var(--radius); padding:22px; box-shadow:var(--shadow); border:1px solid #ffffff12 }
     .title{ display:flex; align-items:center; gap:10px; font-weight:700; font-size:1.25rem; margin:0 0 6px }
     .subtitle{ color:var(--muted); margin:0 0 18px; font-size:.95rem }
+    .row{ display:flex; gap:10px; align-items:center; flex-wrap:wrap }
     .field{
       display:flex; gap:10px; align-items:center; margin:10px 0 14px;
       background:#ffffff08; border:1px solid #ffffff14; border-radius:14px; padding:8px 10px;
       transition:box-shadow .2s,border-color .2s,background .2s;
+      flex:1 1 auto;
     }
     .field:focus-within{ border-color:var(--primary-2); box-shadow:0 0 0 4px var(--ring); background:#ffffff0f }
-    .code-pill{ user-select:none; padding:.55rem .7rem; border-radius:12px; background:#22c55e22; color:var(--primary-2); font-weight:600; letter-spacing:.5px }
-    .code-pill small{ color:var(--muted) }
-    input[type="tel"]{ flex:1; min-width:0; border:none; outline:none; background:transparent; color:var(--text); padding:.6rem; font-size:1.05rem; caret-color:var(--primary-2) }
+    .select{
+      display:flex; align-items:center; gap:8px; background:#22c55e22; border:1px solid #22c55e44;
+      border-radius:12px; padding:6px 8px; color:#d1fae5; flex:0 0 240px;
+    }
+    .select select{
+      background:transparent; border:none; outline:none; color:inherit; font-weight:700; width:100%;
+      direction:ltr;
+    }
+    input[type="tel"]{ flex:1; min-width:200px; border:none; outline:none; background:transparent; color:var(--text); padding:.6rem; font-size:1.05rem; caret-color:var(--primary-2) }
     input::placeholder{ color:#94a3b880 }
     .actions{ display:flex; flex-wrap:wrap; gap:10px; margin-top:6px }
     .btn{
@@ -63,10 +70,7 @@
     }
     .toast.show{ transform:translateY(0); opacity:1 }
     .toast.danger{ background:#ef4444e6 }
-    /* تلميح iOS صغير */
-    .hint{
-      display:none; margin-top:10px; padding:10px; border-radius:12px; border:1px dashed #ffffff2a; background:#ffffff08; color:var(--text); font-size:.9rem;
-    }
+    .hint{ display:none; margin-top:10px; padding:10px; border-radius:12px; border:1px dashed #ffffff2a; background:#ffffff08; color:var(--text); font-size:.9rem; }
     .hint.show{ display:block }
   </style>
 </head>
@@ -81,28 +85,61 @@
         Whatsapp Opener — افتح محادثة واتساب برقم
       </h1>
 
-      <p class="subtitle">اكتب الرقم المحلي أو الدولي. سيضيف التطبيق كود الدولة <b>2</b> تلقائياً بدون حذف الصفر الأول.</p>
+      <p class="subtitle">اختر مفتاح الدولة ثم أدخل الرقم. سيضيف التطبيق الكود تلقائيًا بدون حذف الصفر الأول.</p>
 
-      <div class="field" id="phoneField">
-        <div class="code-pill">+2 <small>EG</small></div>
-        <input id="phone" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="012xxxxxxxx/011xxxxxxxx/010xxxxxxxx" />
+      <div class="row">
+        <div class="select">
+          <span>📞</span>
+          <select id="country">
+            <option value="20" selected>🇪🇬 مصر (+20)</option>
+            <option value="966">🇸🇦 السعودية (+966)</option>
+            <option disabled>──────────</option>
+            <option value="971">🇦🇪 الإمارات (+971)</option>
+            <option value="965">🇰🇼 الكويت (+965)</option>
+            <option value="973">🇧🇭 البحرين (+973)</option>
+            <option value="974">🇶🇦 قطر (+974)</option>
+            <option value="968">🇴🇲 عمان (+968)</option>
+            <option value="962">🇯🇴 الأردن (+962)</option>
+            <option value="961">🇱🇧 لبنان (+961)</option>
+            <option value="963">🇸🇾 سوريا (+963)</option>
+            <option value="964">🇮🇶 العراق (+964)</option>
+            <option value="212">🇲🇦 المغرب (+212)</option>
+            <option value="213">🇩🇿 الجزائر (+213)</option>
+            <option value="216">🇹🇳 تونس (+216)</option>
+            <option value="249">🇸🇩 السودان (+249)</option>
+            <option value="967">🇾🇪 اليمن (+967)</option>
+            <option value="222">🇲🇷 موريتانيا (+222)</option>
+            <option disabled>──────────</option>
+            <option value="90">🇹🇷 تركيا (+90)</option>
+            <option value="1">🇺🇸 أمريكا (+1)</option>
+            <option value="44">🇬🇧 بريطانيا (+44)</option>
+            <option value="33">🇫🇷 فرنسا (+33)</option>
+            <option value="49">🇩🇪 ألمانيا (+49)</option>
+            <option value="39">🇮🇹 إيطاليا (+39)</option>
+            <option value="34">🇪🇸 إسبانيا (+34)</option>
+            <option value="91">🇮🇳 الهند (+91)</option>
+          </select>
+        </div>
+
+        <div class="field" style="flex:1 1 280px;">
+          <input id="phone" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="012xxxxxxxx/011xxxxxxxx/010xxxxxxxx" />
+        </div>
       </div>
 
       <div class="actions">
         <button class="btn" id="openBtn">افتح واتساب الآن</button>
         <button class="btn secondary" id="copyBtn" title="نسخ الرابط">نسخ الرابط</button>
-        <!-- زر الإضافة للشاشة الرئيسية -->
         <button class="btn ghost small" id="installBtn" style="display:none">أضف إلى الشاشة الرئيسية</button>
       </div>
 
       <div class="preview" id="preview">https://api.whatsapp.com/send?phone=2</div>
-      <!-- تلميح iOS يظهر عند الضغط على زر الإضافة في iOS -->
+
+      <p class="muted">تلميح: يمكنك اضافة الاداة الى الشاشة الرئيسية لهاتفك من خلال زرار &#8942; الموجود بالمتصفح</p>
       <div class="hint" id="iosHint">
         على iPhone/iPad: افتح الموقع في <b>Safari</b>، ثم اضغط زر <b>المشاركة</b> (المربع مع السهم ↑)، وبعدها اختر <b>Add to Home Screen</b>.
       </div>
 
-      <p class="muted">تلميح: اضغط Enter داخل الحقل لفتح واتساب. سيتم تجربة التطبيق أولاً ثم الصفحة كخطة بديلة.</p>
-      <p class="muted">تلميح: يمكنك اضافة الاداة الى الشاشة الرئيسية لهاتفك من خلال زرار &#8942; الموجود بالمتصفح</p>
+      <p class="muted">تلميح إضافي: اضغط Enter داخل الحقل لفتح واتساب. سيتم تجربة التطبيق أولاً ثم الصفحة كخطة بديلة.</p>
     </div>
   </div>
 
@@ -110,6 +147,7 @@
 
   <script>
     // ---------------- Core app logic ----------------
+    const country = document.getElementById('country');
     const input  = document.getElementById('phone');
     const openBtn = document.getElementById('openBtn');
     const copyBtn = document.getElementById('copyBtn');
@@ -123,20 +161,18 @@
       setTimeout(()=> toastEl.classList.remove('show'), 2000);
     }
 
-    function normalizeNumber(raw) {
-      if (!raw) return null;
-      let digits = raw.replace(/\D+/g, '');
+    function buildNumber(){
+      const code = country.value; // بدون +
+      let digits = (input.value || '').replace(/\D+/g, '');
       if (!digits) return null;
-      if (digits.startsWith('0')) digits = '2' + digits;
-      else if (!digits.startsWith('2')) digits = '2' + digits;
-      return digits;
+      return code + digits; // نحافظ على الصفر الأول داخل الرقم
     }
 
     function buildUrls(){
-      const normalized = normalizeNumber(input.value);
-      if (!normalized) return { apiUrl: null, intentUrl: null };
-      const apiUrl = 'https://api.whatsapp.com/send?phone=' + encodeURIComponent(normalized);
-      const intentUrl = 'whatsapp://send?phone=' + encodeURIComponent(normalized);
+      const full = buildNumber();
+      if (!full) return { apiUrl: null, intentUrl: null };
+      const apiUrl = 'https://api.whatsapp.com/send?phone=' + encodeURIComponent(full);
+      const intentUrl = 'whatsapp://send?phone=' + encodeURIComponent(full);
       return { apiUrl, intentUrl };
     }
 
@@ -163,6 +199,7 @@
     }
 
     input.addEventListener('input', updatePreview);
+    country.addEventListener('change', updatePreview);
     input.addEventListener('keydown', (e) => { if (e.key === 'Enter') openWhatsApp(); });
     openBtn.addEventListener('click', openWhatsApp);
     copyBtn.addEventListener('click', copyLink);
@@ -174,11 +211,9 @@
     const iosHint = document.getElementById('iosHint');
     let deferredPrompt = null;
 
-    // Helper: detect installed / standalone
     function isStandalone(){
       return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
     }
-    // Helper: basic iOS Safari detection (excludes Chrome/Firefox/Edge on iOS)
     function isIosSafari(){
       const ua = window.navigator.userAgent.toLowerCase();
       const isiOS = /iphone|ipad|ipod/.test(ua);
@@ -186,9 +221,7 @@
       return isiOS && isSafari;
     }
 
-    // ANDROID/CHROME: show btn when beforeinstallprompt fires
     window.addEventListener('beforeinstallprompt', (e) => {
-      // Only show if not installed
       if (isStandalone()) return;
       e.preventDefault();
       deferredPrompt = e;
@@ -201,22 +234,20 @@
           if (choice.outcome === 'accepted') showToast('تم بدء التثبيت');
           deferredPrompt = null;
           installBtn.style.display = 'none';
-        }catch(_){ /* ignore */ }
+        }catch(_){}
       };
     });
 
-    // iOS/Safari: لا يوجد beforeinstallprompt — نُظهر زرًا يعرض التعليمات
     function setupIosA2HS(){
-      if (isStandalone()) return; // مثبت بالفعل
+      if (isStandalone()) return;
       if (isIosSafari()){
         installBtn.style.display = 'inline-block';
         installBtn.textContent = 'أضف إلى الشاشة الرئيسية';
         installBtn.onclick = () => {
-          iosHint.classList.toggle('show'); // إظهار/إخفاء التلميح
+          iosHint.classList.toggle('show');
           showToast('افتح قائمة المشاركة ثم Add to Home Screen');
         };
       } else {
-        // لو iOS لكن ليس Safari، نعرض زرًا يوجّه المستخدم لفتح Safari
         const isiOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
         if (isiOS){
           installBtn.style.display = 'inline-block';
@@ -227,7 +258,6 @@
     }
     setupIosA2HS();
 
-    // SW registration
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js').catch(console.error);
